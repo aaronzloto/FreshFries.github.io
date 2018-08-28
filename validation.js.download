@@ -1,0 +1,98 @@
+$(".next").attr("disabled", true).addClass("ui-state-disabled");
+$("#progressbar").progressbar({
+    value: 0
+});
+
+var $name = $("#name");
+var $ad1 = $("#advance-1");
+var $order = $("#order");
+var $ad2 = $("#advance-2");
+var $btnBanner = $(".btn-banner");
+
+$("div.slide-1").mousemove(function () {
+    if ($name.val().length > 3) {
+        $ad1.button("enable");
+
+    } else {
+        $ad1.button("disable");
+    }
+
+});
+
+$ad1.on('click', function () {
+    $("#progressbar").progressbar({
+        value: 33
+    });
+})
+
+$("div.slide-2").mousemove(function () {
+    if ($("input[name='base']:checked").val() && $('input[type="checkbox"].main:checked').length > 0) {
+        $ad2.button("enable");
+        calcPrice(20);
+        if ($('input[type="checkbox"].add:checked').length > 0) {
+            calcPrice(25);
+        }
+    } else {
+        $ad2.button("disable");
+        calcPrice(0);
+    }
+});
+$ad2.on('click', function () {
+
+    $("#progressbar").progressbar({
+        value: 66
+    });
+})
+
+function calcPrice(price) {
+
+    $('.price').html('<p class="intro price">Your price: ' + price + ' NIS</p>');
+}
+
+$("div.slide-3").mousemove(function () {
+    var valid = $('input[name=email]').val();
+    if ($("input[name='time']:checked").val() && /(.+)@(.+){2,}\.(.+){2,}/.test(valid)) {
+        $('#submit1').button("enable");
+    } else {
+        $('#submit1').button("disable");
+
+    }
+});
+$('#submit1').on('click', function (e) {
+    var name, base, main, add, time, email;
+    //e.preventDefault();
+    name = $name.val();
+    base = $('input[name="base"]:checked').val();
+
+
+
+     main = [];
+    $('input[type="checkbox"].main:checked').each(function () {
+        main.push($(this).val() + ', ');
+    });
+
+     add = [];
+    $('input[type="checkbox"].add:checked').each(function () {
+        add.push($(this).val() + ', ');
+    });
+    time = $("input[name='time']:checked").val();
+    email = $('input[name=email]').val();
+    $('span#name1').html(name);
+    $('span#base1').html(base);
+    $('span#main1').html(main);
+    $('span#add-on1').html(add);
+    $('span#time1').html(time);
+    $('span#email1').html(email);
+
+    $("#progressbar").progressbar({
+        value: 100
+    });
+})
+
+
+//third panel validation
+
+
+$('#begin').on("click", function () {
+    location.reload();
+})
